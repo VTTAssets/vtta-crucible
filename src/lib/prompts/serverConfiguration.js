@@ -89,7 +89,10 @@ const serverConfiguration = () => {
           message:
             "Which license do you want to use for this server (only displaying unused licenses)?",
           choices: licenses.map((license) => ({
-            name: `${license.key} (${license.assignedTo})`,
+            name: `${license.key // obfuscate the license key
+              .split("-")
+              .map((part, index) => (index == 0 || index == 5 ? part : "****"))
+              .join("-")} (${license.assignedTo})`,
             value: license.key,
           })),
         },
