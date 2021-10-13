@@ -10,10 +10,16 @@ const destroy = (server) => {
     const processList = await list();
     console.log("Process List of pm2");
     console.log(processList);
-    const toDelete = processList.find((proc) => proc.name === server.hostname);
+    const toDelete = processList.find(
+      (proc) => proc.hostname === server.hostname
+    );
+    console.log("To Delete");
+    console.log(toDelete);
     if (!toDelete) {
       ui.log("Did not find a running process for " + server.hostname, "warn");
-      resolve(false);
+      return resolve(false);
+    } else {
+      ui.log("Deleting pm2 process ");
     }
 
     pm2.connect((error) => {
