@@ -45,7 +45,7 @@ const deleteRecord = async (personalAccessToken, hostname) => {
 
   const instance = new DigitalOcean(personalAccessToken);
 
-  const records = getRecords(personalAccessToken, domainName, instance);
+  const records = await getRecords(personalAccessToken, domainName, instance);
 
   const toDelete = records.find(
     (record) => record.type === "A" && record.name === subdomainName
