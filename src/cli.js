@@ -24,6 +24,7 @@ Options:
   --log-level=LEVEL      If specified, then the log level will be set to
                          the specified value.  Valid values are "debug", "info",
                          "warn", and "error". [default: error]
+  --skip-setup           If specified, the setup check on startup will be skipped
 `;
 
 let logger;
@@ -32,15 +33,17 @@ const getOptions = () => {
   let cmd = docopt.docopt(doc, { version: "1.0.0" });
   return {
     logLevel: cmd["--log-level"].toLowerCase(),
+    skipSetup: cmd["--skip-setup"] ? true : false,
   };
 };
 
 const main = async () => {
-  await Screens.setup();
+  const options = getOptions();
+  if (!options.skipSetup) await Screens.setup();
 
   await Menu.show();
   return;
-  const options = getOptions();
+
   logger = createLogger("Main", options.logLevel);
 
   let environment = env.load();
