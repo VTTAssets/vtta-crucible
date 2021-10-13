@@ -8,6 +8,7 @@ import Screens from "./lib/prompts/index.js";
 import docopt from "docopt";
 import env from "./lib/env.js";
 import Menu from "./lib/menu.js";
+import ui from "./lib/ui.js";
 
 const doc = `
 Installs and manages Foundry VTT running inside a Digital Ocean Droplet, with optional
@@ -17,14 +18,15 @@ This utility stores credentials in a file read/write-able by the currently logge
 user to ${config.store.env}.
 
 Usage:
-  index.js [--log-level=LEVEL] 
+  index.js [--log-level=LEVEL] [--skip-setup]
   index.js (-h | --help)
+
 Options:
   -h --help              Show this message.
   --log-level=LEVEL      If specified, then the log level will be set to
                          the specified value.  Valid values are "debug", "info",
                          "warn", and "error". [default: error]
-  --skip-setup           If specified, the setup check on startup will be skipped
+  --skip-setup           If specified, the setup check on startup will be skipped. [default: false]
 `;
 
 let logger;
@@ -39,7 +41,11 @@ const getOptions = () => {
 
 const main = async () => {
   const options = getOptions();
-  if (!options.skipSetup) await Screens.setup();
+  if (options.skipSetup) {
+    ui.log("Skipping setup", "warn");
+  } else {
+    await Screens.setup();
+  }
 
   await Menu.show();
   return;
