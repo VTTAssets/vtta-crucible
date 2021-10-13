@@ -47,4 +47,8 @@ Some additional steps are required for you to use this tool:
 **Steps:**
 
 1. Open a console window ([watch me do it](img/open-console.gif))
-2. Execute the pre-install script found in this repository. It updates the system and installs all necessary components by pasting the following command into your shell: `curl -fsSL https://raw.githubusercontent.com/VTTAssets/vtta-crucible/main/install.sh | bash -`. The installation process will take a couple of minutes to finish ([watch me do it](img/install-requirements.gif))
+2. Execute the pre-install script found in this repository. It updates the system and installs all necessary components by pasting the following command into your shell:
+
+   `curl -fsSL https://raw.githubusercontent.com/VTTAssets/vtta-crucible/main/install.sh | bash -`.
+
+   The installation process will take a couple of minutes to finish ([watch me do it](img/install-requirements.gif))

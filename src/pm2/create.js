@@ -21,7 +21,7 @@ const create = (server) => {
           cwd: `${config.store.servers}/${server.hostname}/bin`,
           script: "resources/app/main.js",
           args: [
-            `--dataPath="${config.store.servers}/${server.hostname}/data}"`,
+            `--dataPath="${config.store.servers}/${server.hostname}/data"`,
             `--port=${server.port}`,
             `--hostname=${server.hostname}`,
             "proxySSL=true",

@@ -32,7 +32,7 @@ const list = () => {
               hostname: app.pm2_env.name,
               id: parseInt(app.pm2_env.pm_id),
               status: app.pm2_env.status,
-              ressources: {
+              resources: {
                 memory: Math.ceil(app.monit.memory / 1024 / 1024),
                 cpu: app.monit.cpu,
               },

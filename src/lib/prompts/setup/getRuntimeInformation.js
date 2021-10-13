@@ -1,6 +1,6 @@
 import Caddy from "../../../caddy/index.js";
 import inquirer from "inquirer";
-import Server from "../../../servers/index.js";
+import pm2 from "../../../pm2/index.js";
 
 import ui from "../../ui.js";
 
@@ -17,7 +17,7 @@ const getRuntimeInformation = async () => {
   //     },
   //   ];
 
-  const processInfo = await Server.list();
+  const processInfo = await pm2.list();
 
   // [
   //   {
