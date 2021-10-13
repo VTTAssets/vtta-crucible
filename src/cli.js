@@ -36,7 +36,7 @@ const getOptions = () => {
 };
 
 const main = async () => {
-  // await Screens.setup();
+  await Screens.setup();
 
   await Menu.show();
   return;

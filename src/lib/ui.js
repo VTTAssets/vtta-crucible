@@ -64,7 +64,7 @@ export const log = (message, status = "regular") => {
 
   switch (status) {
     case "success":
-      console.log(chalk.green(line + "\n" + "✓   " + message + "\n" + line));
+      console.log(chalk.green("✓   " + message));
       break;
     case "error":
       console.log(chalk.red(line + "\n" + "✘   " + message + "\n" + line));
