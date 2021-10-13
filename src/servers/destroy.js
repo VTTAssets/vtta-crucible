@@ -64,7 +64,10 @@ const destroy = async (server) => {
   // create the dns record
   ui.log("Unregistering DNS record...");
   try {
-    const ipAddress = await DO.domains.deleteRecord(server.hostname);
+    const ipAddress = await DO.domains.deleteRecord(
+      environment.credentials.digitalOcean.personalAccessTken,
+      server.hostname
+    );
     ui.log(
       `Unregistering DNS record for ${server.hostname} => ${ipAddress} in Digital Ocean's DNS succeeded.`,
       "success"
@@ -79,11 +82,9 @@ const destroy = async (server) => {
   }
   // ---------------------------------------------
 
-  ui.log(`Installing Foundry VTT, release ${desiredRelease.name}...`);
-
+  ui.log(`Deleting server data directory...`);
   // create the directory structure necessary for this server
   rimraf.sync(`${config.store.servers}/${server.hostname}`);
-
   ui.log(
     `Deleted server directory structure at ${config.store.servers}/${server.hostname}`,
     "success"

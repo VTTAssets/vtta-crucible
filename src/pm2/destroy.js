@@ -4,8 +4,12 @@ import pm2 from "pm2";
 import list from "./list.js";
 
 const destroy = (server) => {
+  console.log("Pm2: destroy");
+  console.log(server);
   return new Promise(async (resolve, reject) => {
     const processList = await list();
+    console.log("Process List of pm2");
+    console.log(processList);
     const toDelete = processList.find((proc) => proc.name === server.hostname);
     if (!toDelete) {
       ui.log("Did not find a running process for " + server.hostname, "warn");

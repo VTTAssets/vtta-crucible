@@ -39,12 +39,13 @@ const getRecords = async (personalAccessToken, domainName, instance = null) => {
  * @returns
  */
 const deleteRecord = async (personalAccessToken, hostname) => {
-  const subdomainName = hostname.split(".").shift();
-  const domainName = hostname.replace(`${subdomainName}.`, "");
+  const parts = hostname.split(".");
+  const subdomainName = parts.shift();
+  const domainName = parts.join(".");
 
   const instance = new DigitalOcean(personalAccessToken);
 
-  const records = getRecords(personalAccessToken, domaonName, instance);
+  const records = getRecords(personalAccessToken, domainName, instance);
 
   const toDelete = records.find(
     (record) => record.type === "A" && record.name === subdomainName
