@@ -6,8 +6,7 @@ import Servers from "../../servers/index.js";
 const selectServer = () => {
   return new Promise(async (resolve, reject) => {
     const servers = await Servers.list();
-
-    console.log(servers);
+    servers.push({ name: "<Cancel>", value: null });
     // query all necessary information
     inquirer
       .prompt([
@@ -15,12 +14,10 @@ const selectServer = () => {
           type: "list",
           name: "server",
           message: "Select a server",
-          choices: servers,
+          choices: servers.map((server) => server.hostname),
         },
       ])
       .then((answers) => {
-        // If spaces is not configured, we set it to disabled to have a consistent UI later on
-
         resolve(answers.server);
       })
       .catch((error) => reject(error));
