@@ -67,7 +67,7 @@ const list = async () => {
       .map((line) => parseInt(line.split(":").pop().trim()))
       .shift();
 
-    configs.push({ hostname: hostname, upstream: "http://localhost:" + port });
+    configs.push({ hostname: hostname, upstream: "localhost:" + port });
   }
 
   return health(configs);
