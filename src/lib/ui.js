@@ -48,7 +48,7 @@ const boldify = (str) => {
   return parts
     .map((part) => {
       isBold = !isBold;
-      return isBold ? chalk.bold(part) : chalk.grey(part);
+      return isBold ? chalk.underline(part) : chalk.white(part);
     })
     .join("");
 };
@@ -64,13 +64,13 @@ export const log = (message, status = "regular") => {
 
   switch (status) {
     case "success":
-      console.log(chalk.green(line + "\n" + "✅   " + message + "\n" + line));
+      console.log(chalk.green(line + "\n" + "✓   " + message + "\n" + line));
       break;
     case "error":
-      console.log(chalk.red(line + "\n" + "❎   " + message + "\n" + line));
+      console.log(chalk.red(line + "\n" + "✘   " + message + "\n" + line));
       break;
     case "warn":
-      console.log(chalk.yellow(line + "\n" + " ❗  " + message + "\n" + line));
+      console.log(chalk.yellow(line + "\n" + "⚠  " + message + "\n" + line));
       break;
     default:
       console.log(boldify(message));
