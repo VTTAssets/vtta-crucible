@@ -6,7 +6,7 @@ import Servers from "../../servers/index.js";
 const selectServer = () => {
   return new Promise(async (resolve, reject) => {
     const servers = await Servers.list();
-    servers.push({ name: "<Cancel>", value: null });
+    servers.push({ name: "<Cancel>" });
     // query all necessary information
     inquirer
       .prompt([
