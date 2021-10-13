@@ -1,8 +1,7 @@
 import * as path from "path";
 import { writeFileSync } from "fs";
 import reload from "./reload.js";
-
-const ROOT = "/etc/caddy/fvtt-servers";
+import config from "../config.js";
 
 const create = async (hostname, port) => {
   const contents = `# Configuration created by Foundry VTT Installer
@@ -30,9 +29,13 @@ ${hostname} {
     }
 }`;
 
-  writeFileSync(path.resolve(ROOT, `${hostname}.conf`), contents, {
-    encoding: "utf-8",
-  });
+  writeFileSync(
+    path.resolve(config.store.caddyConfigs, `${hostname}.conf`),
+    contents,
+    {
+      encoding: "utf-8",
+    }
+  );
 
   // reloading Caddy
   return reload();

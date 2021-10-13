@@ -4,22 +4,6 @@ import Server from "../../../servers/index.js";
 
 import ui from "../../ui.js";
 
-const confirm = (question) => {
-  return new Promise((resolve, reject) => {
-    inquirer
-      .prompt([
-        {
-          type: "confirm",
-          name: "choice",
-          message: question,
-          default: false,
-        },
-      ])
-      .then((answers) => resolve(answers.question))
-      .catch((error) => resolve(false));
-  });
-};
-
 const getRuntimeInformation = async () => {
   let caddyInfo = await Caddy.list();
   //   [

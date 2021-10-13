@@ -34,9 +34,9 @@ apt-get install -y caddy > /dev/null 2>&1
 echo "Done."
 
 # Create a subdirectory to store a Caddyfile per FVTT server
-mkdir /etc/caddy/sites-enabled
+mkdir -p /etc/caddy/crucible
 # Add a reference to all config files stored in this directory to the main Caddyfile
-echo -ne "import /etc/caddy/fvtt-servers/*" >> /etc/caddy/Caddyfile
+grep -qxF 'import /etc/caddy/crucible/*' /etc/caddy/Caddyfile || echo 'import /etc/caddy/crucible/*' >>  /etc/caddy/Caddyfile
 
 # Install the process manager for node.js processes 
 echo -ne "Installing pm2 (node process manager)..."
