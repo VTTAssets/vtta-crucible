@@ -27,8 +27,6 @@ const findNextFreePort = () => {
 };
 
 const create = async (serverConfig) => {
-  console.log("Creating server with config");
-  console.log(serverConfig);
   const environment = await env.load();
   // {
   //   domainName: 'oneshot-tavern.com',

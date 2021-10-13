@@ -24,8 +24,6 @@ const list = () => {
       return server;
     });
 
-    console.log(servers);
-
     resolve(servers);
   });
 };

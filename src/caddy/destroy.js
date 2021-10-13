@@ -10,11 +10,10 @@ const destroy = async (hostname, port) => {
   );
   if (existsSync(caddyConfig)) {
     unlinkSync(caddyConfig);
-    // reloading Caddy
-    return reload();
+    await reload();
   }
 
-  return false;
+  return true;
 };
 
 export default destroy;

@@ -108,8 +108,6 @@ const serverConfiguration = () => {
         // If spaces is not configured, we set it to disabled to have a consistent UI later on
         answers.spacesEnabled =
           answers.spacesEnabled === undefined ? false : answers.spacesEnabled;
-
-        console.log(answers);
         resolve(answers);
       })
       .catch((error) => reject(error));

@@ -38,7 +38,8 @@ ${hostname} {
   );
 
   // reloading Caddy
-  return reload();
+  await reload();
+  return true;
 };
 
 export default create;

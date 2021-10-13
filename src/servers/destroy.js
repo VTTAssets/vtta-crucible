@@ -21,8 +21,6 @@ import pm2 from "../pm2/index.js";
  * @param {object} server Server object from environment
  */
 const destroy = async (server) => {
-  console.log("Destroying server ");
-  console.log(server);
   const environment = await env.load();
   environment.servers = environment.servers.filter(
     (srv) => srv.hostname !== server.hostname
