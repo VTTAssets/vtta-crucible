@@ -4,22 +4,16 @@ import list from "./list.js";
 import save from "./save.js";
 
 const destroy = (server) => {
-  console.log("Pm2: destroy");
-  console.log(server);
   return new Promise(async (resolve, reject) => {
     const processList = await list();
-    console.log("Process List of pm2");
-    console.log(processList);
+
     const toDelete = processList.find(
       (proc) => proc.hostname === server.hostname
     );
-    console.log("To Delete");
-    console.log(toDelete);
+
     if (!toDelete) {
       ui.log("Did not find a running process for " + server.hostname, "warn");
       return resolve(false);
-    } else {
-      ui.log("Deleting pm2 process ");
     }
 
     pm2.connect((error) => {
@@ -35,11 +29,11 @@ const destroy = (server) => {
         if (err) {
           ui.log("Server deletion with pm2 failed", "error");
           ui.log(err);
-          resolve(false);
+          return resolve(false);
         }
         await save();
         pm2.disconnect();
-        resolve(true);
+        return resolve(true);
       });
     });
   });

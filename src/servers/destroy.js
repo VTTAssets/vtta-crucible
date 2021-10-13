@@ -65,7 +65,7 @@ const destroy = async (server) => {
   ui.log("Unregistering DNS record...");
   try {
     const ipAddress = await DO.domains.deleteRecord(
-      environment.credentials.digitalOcean.personalAccessTken,
+      environment.credentials.digitalOcean.personalAccessToken,
       server.hostname
     );
     ui.log(
