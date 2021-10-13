@@ -18,8 +18,16 @@
 - **Spaces** - Digital Ocean's fancy name for an [Object Storage](spaces-benefits.md)
 - **Region** - Digital Ocean has datacenters in certain world regions. While you can create a droplet at all of their regions, not all provide Spaces, too. I suggest finding a region that is geographically near you **and** provides both services to have shorter latencies
 
-- Buy a domain at a domain registrar (NameCheap, Google Domains, GoDaddy, ...) and [register the domain at Digital Ocean](https://docs.digitalocean.com/products/networking/dns/how-to/add-domains/)
-- [Create a SSH key and upload your Public Key to Digital Ocean](https://docs.digitalocean.com/products/droplets/how-to/add-ssh-keys/to-account/). It is used to authenticate when logging into the droplet later on
+## Pre-requisites
+
+Some additional steps are required for you to use this tool:
+
+- [Create a Digital Ocean account](https://m.do.co/c/ea9292afc8cc). If you are using my referral code, you will get 100$ in credits, to spend in the next 60 days. I will get $25 if you stay after this period and spend $25 by using their services. If you are as pleased with their services as I am, you can reduce the monthly costs for running VTTA a tiny bit down the road - thanks!
+- Buy a domain at a domain registrar (NameCheap, Google Domains, GoDaddy, ...) and [register the domain at Digital Ocean](https://docs.digitalocean.com/products/networking/dns/how-to/add-domains/). I was with GoDaddy for the last years, but needed to switch to Google Domains since GoDaddy has some issues with `.de` domains and Digital Ocean. Name Cheap might be less expensive, but I haven't used that yet.
+- (optional) [Create a SSH key and upload your Public Key to Digital Ocean](https://docs.digitalocean.com/products/droplets/how-to/add-ssh-keys/to-account/). You will use this SSH key if you connect to your Droplet via SSH (duh). There is a window, which works, but is a little slugish remote console included in the Droplet's configuration:
+
+  ![Here it is!](img/console-button.png)
+
 - Create a Digital Ocean [Personal Access Token](https://docs.digitalocean.com/reference/api/create-personal-access-token/) (or [watch me do it](img/create-personal-access-token.gif))
 - (optional) Enable [Digital Ocean Spaces](https://www.digitalocean.com/producs/spaces) in your DO Control Panel and [create a Access Key/Secret Key](https://docs.digitalocean.com/products/spaces/how-to/manage-access/) pair (or [watch me do it](img/create-spaces-key.gif)). I wrote some [explanation, pros and cons of using Spaces](spaces-benefits.md) which you might find interesting.
 

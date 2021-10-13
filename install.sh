@@ -41,7 +41,7 @@ grep -qxF 'import /etc/caddy/crucible/*' /etc/caddy/Caddyfile || echo 'import /e
 # Install the process manager for node.js processes 
 echo -ne "Installing pm2 (node process manager)..."
 npm install pm2@latest -g > /dev/null 2>&1
-echo -ne "Done."
+echo "Done."
 
 # Install a log rotate module to not fill up our drive with logs
 echo -ne "Installing pm2 logrotate plugin, to avoid filling up our drive with logs..."
