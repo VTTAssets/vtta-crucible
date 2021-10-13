@@ -24,7 +24,7 @@ const selectServer = () => {
 
     // query all necessary information
     inquirer
-      .prompt([])
+      .prompt([question])
       .then((answers) => {
         console.log("Answer received: ");
         console.log(answers);
