@@ -6,6 +6,8 @@ import ui from "../../ui.js";
 
 const getRuntimeInformation = async () => {
   let caddyInfo = await Caddy.list();
+  console.log("CaddyInfo");
+  console.log(caddyInfo);
   //   [
   //     {
   //       upstream: "localhost:30000",
@@ -18,13 +20,15 @@ const getRuntimeInformation = async () => {
   //   ];
 
   const processInfo = await pm2.list();
+  console.log("ProcessInfo");
+  console.log(processInfo);
 
   // [
   //   {
   //     hostname: "saloon.oneshot-tavern.com",
   //     id: 0,
   //     status: "online",
-  //     ressources: { memory: 80, cpu: 0.7 },
+  //     resources: { memory: 80, cpu: 0.7 },
   //   },
   // ];
 

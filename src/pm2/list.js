@@ -27,7 +27,6 @@ const list = () => {
             return app.pm2_env.cwd.indexOf(config.store.servers) !== -1;
           })
           .map((app) => {
-            console.log(app);
             return {
               hostname: app.pm2_env.name,
               id: parseInt(app.pm2_env.pm_id),
