@@ -118,7 +118,6 @@ const worldMenu = {
 const MENUS = [mainMenu, serverMenu, worldMenu];
 
 const displayMenu = (menu) => {
-  console.log("Displaying Menu " + menu.value);
   return new Promise((resolve, reject) => {
     inquirer
       .prompt([
