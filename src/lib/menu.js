@@ -60,6 +60,8 @@ const serverMenu = {
             if (confirmation) await Server.delete(server);
           }
         } catch (error) {
+          ui.log("ERROR DELETING SERVER", "error");
+          console.log(error);
           // Going back to the Manage menu
           // not doing anything here will re-render
         }
