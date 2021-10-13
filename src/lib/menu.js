@@ -3,6 +3,7 @@ import Prompts from "./prompts/index.js";
 
 import Server from "../servers/index.js";
 import ui from "./ui.js";
+import env from "./env.js";
 
 const MENU_ITEM_BACK = (name, jumpLabel) => ({
   name: `=> Go back to ${name}`,
