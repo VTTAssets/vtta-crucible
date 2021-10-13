@@ -111,27 +111,27 @@ const create = async (serverConfig) => {
 
   // ---------------------------------------------
 
-  //   // pm2 config for this server
-  //   ui.log("Creating pm2 environment configuration...");
-  //   const ecosystem = `module.exports = {
-  //   apps : [{
-  //     name: "${server.name}",
-  //     script: "resources/app/main.js",
-  //     args: ["--dataPath=${path.resolve(
-  //       `${config.store.servers}/${server.hostname}`
-  //     )}/data", "--port=${server.port}", "--hostname=${
-  //     server.hostname
-  //   }", "proxySSL=true", "proxyPort=443"],
-  //     cwd: "${path.resolve(`${config.store.servers}/${server.hostname}`)}/bin",
-  //   }],
-  // };`;
+  // pm2 config for this server
+  ui.log("Creating pm2 environment configuration for manual registration...");
+  const ecosystem = `module.exports = {
+    apps : [{
+      name: "${server.hostname}",
+      script: "resources/app/main.js",
+      args: ["--dataPath=${path.resolve(
+        `${config.store.servers}/${server.hostname}`
+      )}/data", "--port=${server.port}", "--hostname=${
+    server.hostname
+  }", "proxySSL=true", "proxyPort=443"],
+      cwd: "${path.resolve(`${config.store.servers}/${server.hostname}`)}/bin",
+    }],
+  };`;
 
-  //   fs.writeFileSync(
-  //     `${config.store.servers}/${server.hostname}/ecosystem.config.js`,
-  //     ecosystem,
-  //     { encoding: "utf-8" }
-  //   );
-  //   ui.log("pm2 environment configuration created", "success");
+  fs.writeFileSync(
+    `${config.store.servers}/${server.hostname}/ecosystem.config.js`,
+    ecosystem,
+    { encoding: "utf-8" }
+  );
+  ui.log("pm2 environment configuration created", "success");
 
   // ---------------------------------------------
   ui.log("Creating Foundry VTT license file...");
@@ -195,7 +195,7 @@ const create = async (serverConfig) => {
 
   ui.log("Registering server at pm2...");
   try {
-    const serverRuntime = await pm2.register(server);
+    const serverRuntime = await pm2.create(server);
     ui.log("Registraton successful", "success");
   } catch (error) {
     ui.log(`Registration failed: ${error.message}`, "error");

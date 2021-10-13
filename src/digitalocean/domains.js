@@ -67,11 +67,7 @@ const deleteRecord = async (personalAccessToken, hostname) => {
 const createRecord = async (personalAccessToken, domainName, subdomainName) => {
   const instance = new DigitalOcean(personalAccessToken);
 
-  console.log(
-    `createRecord(${personalAccessToken}, ${domainName}, ${subdomainName})`
-  );
   const currentIp = await droplet.getIPAddress();
-  console.log("Current IP: " + currentIp);
 
   let records;
   try {
@@ -81,10 +77,6 @@ const createRecord = async (personalAccessToken, domainName, subdomainName) => {
     console.log(error);
     process.exit(1);
   }
-
-  console.log("Configured records");
-  console.log(records);
-
   // check if it exists already
   const existing = records.find((record) => record.name === subdomainName);
   if (existing) {
