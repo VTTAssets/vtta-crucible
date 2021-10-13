@@ -1,0 +1,27 @@
+{
+  "srv0": {
+    "listen": [":443"],
+    "logs": { "logger_names": { "saloon.oneshot-tavern.com": "log0" } },
+    "routes": [
+      {
+        "handle": [
+          {
+            "handler": "subroute",
+            "routes": [
+              {
+                "handle": [
+                  {
+                    "handler": "reverse_proxy",
+                    "upstreams": [{ "dial": "localhost:30000" }]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "match": [{ "host": ["saloon.oneshot-tavern.com"] }],
+        "terminal": true
+      }
+    ]
+  }
+}

@@ -1,0 +1,41 @@
+import * as path from "path";
+import { writeFileSync } from "fs";
+import reload from "./reload.js";
+
+const ROOT = "/etc/caddy/fvtt-servers";
+
+const create = async (hostname, port) => {
+  const contents = `# Configuration created by Foundry VTT Installer
+# Do not edit manually, as changes might get overwritten
+# ----------------------------------------------------------------
+# hostname: ${hostname}
+# port: ${port}
+# ----------------------------------------------------------------
+
+${hostname} {
+    reverse_proxy localhost:${port} {
+      health_uri /icons/vtt.png
+      health_status 200
+      health_interval 2s
+      health_timeout 10s
+    }
+
+    log {
+	    output file /var/log/caddy/${hostname}-access.log
+    }
+
+    # Ramping max body size up for animated maps
+    request_body {
+        max_size 100MB
+    }
+}`;
+
+  writeFileSync(path.resolve(ROOT, `${hostname}.conf`), contents, {
+    encoding: "utf-8",
+  });
+
+  // reloading Caddy
+  return reload();
+};
+
+export default create;

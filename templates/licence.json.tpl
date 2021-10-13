@@ -1,0 +1,4 @@
+{
+  "host": "{{DOMAIN}}",
+  "license": "{{LICENSE}}"
+}
