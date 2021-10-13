@@ -11,7 +11,7 @@ const confirm = (question) => {
           default: false,
         },
       ])
-      .then((answers) => resolve(answers.question))
+      .then((answers) => resolve(answers.choice))
       .catch((error) => resolve(false));
   });
 };
