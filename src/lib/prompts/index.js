@@ -1,5 +1,5 @@
-import createServer from "./serverConfiguration.js";
+import serverConfiguration from "./serverConfiguration.js";
 import selectServer from "./selectServer.js";
 import setup from "./setup.js";
 
-export default { setup, createServer, selectServer };
+export default { setup, serverConfiguration, selectServer };
