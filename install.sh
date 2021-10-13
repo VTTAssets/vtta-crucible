@@ -5,13 +5,13 @@ echo -ne "Running pre-Install routine for node.js...";
 curl -fsSL https://deb.nodesource.com/setup_lts.x | bash - > /dev/null 2>&1
 echo "Done."
 
-echo "Running pre-install for Caddy (reverse proxy)..."
+echo -ne "Running pre-install for Caddy (reverse proxy)..."
 curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/gpg.key' | tee /etc/apt/trusted.gpg.d/caddy-stable.asc > /dev/null 2>&1
 curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/debian.deb.txt' | tee /etc/apt/sources.list.d/caddy-stable.list > /dev/null 2>&1
 echo "Done."
 
 # Update the package list
-echo -ne "Updating package list..."
+echo -ne "Updating package list (this takes a moment, please stand by)..."
 apt update > /dev/null 2>&1 && apt upgrade -y > /dev/null 2>&1
 echo "Done."
 
