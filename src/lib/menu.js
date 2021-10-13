@@ -58,7 +58,7 @@ const serverMenu = {
             const confirmation = await Prompts.confirm(
               "Do you really want to delete the server? This action cannot be reversed!"
             );
-            if (confirmation) await Server.delete(server);
+            if (confirmation) await Server.destroy(server);
           }
         } catch (error) {
           ui.log("ERROR DELETING SERVER", "error");
