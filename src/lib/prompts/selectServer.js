@@ -8,25 +8,32 @@ const selectServer = () => {
     const servers = await Servers.list();
 
     console.log(servers);
-    servers.push({ name: "<Cancel>" });
+    const question = {
+      type: "list",
+      name: "server",
+      message: "Select a server",
+      choices: [
+        ...servers.map((server) => server.hostname),
+        new inquirer.Separator(),
+        "<Cancel>",
+      ],
+    };
+
+    console.log("Question");
+    console.log(question);
+
     // query all necessary information
     inquirer
-      .prompt([
-        {
-          type: "list",
-          name: "server",
-          message: "Select a server",
-          choices: [
-            ...servers.map((server) => server.hostname),
-            new inquirer.Separator(),
-            "<Cancel>",
-          ],
-        },
-      ])
+      .prompt([])
       .then((answers) => {
+        console.log("Answer received: ");
+        console.log(answers);
         resolve(answers.server);
       })
-      .catch((error) => reject(error));
+      .catch((error) => {
+        console.log(error);
+        reject(error);
+      });
   });
 };
 
