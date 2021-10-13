@@ -30,7 +30,7 @@ const destroy = async (server) => {
 
   // ---------------------------------------------
 
-  ui.log("Unregistering server with Caddy (reverse proxy)...", success);
+  ui.log("Unregistering server with Caddy (reverse proxy)...");
   try {
     const success = await Caddy.destroy(server.hostname);
     if (success) {
