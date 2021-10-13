@@ -1,6 +1,7 @@
 import ui from "../lib/ui.js";
 import pm2 from "pm2";
-import { list, save } from "./index.js";
+import list from "./list.js";
+import save from "./save.js";
 
 const destroy = (server) => {
   console.log("Pm2: destroy");
