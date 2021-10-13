@@ -13,7 +13,6 @@ const createFolders = () => {
 
   // removing cookies to not use old info
   targetPath = path.resolve(config.store.cookies);
-  console.log("Cookie Path: " + targetPath);
   if (existsSync(targetPath)) {
     unlinkSync(targetPath);
   }

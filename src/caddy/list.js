@@ -59,11 +59,13 @@ const list = async () => {
     // # port: ${port}
     const hostname = lines
       .filter((line) => line.search(/# hostname: (.+)/) !== -1)
-      .map((line) => line.split(":").pop().trim());
+      .map((line) => line.split(":").pop().trim())
+      .shift();
 
     const port = lines
       .filter((line) => line.search(/# port: (\d+)/) !== -1)
-      .map((line) => parseInt(line.split(":").pop().trim()));
+      .map((line) => parseInt(line.split(":").pop().trim()))
+      .shift();
 
     configs.push({ hostname: hostname, upstream: "http://localhost:" + port });
   }
