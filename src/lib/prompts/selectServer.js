@@ -2,6 +2,7 @@ import env from "../env.js";
 import inquirer from "inquirer";
 
 import Servers from "../../servers/index.js";
+import CANCEL_PROMPT from "./index.js";
 
 const selectServer = () => {
   return new Promise(async (resolve, reject) => {
@@ -15,20 +16,15 @@ const selectServer = () => {
       choices: [
         ...servers.map((server) => server.hostname),
         new inquirer.Separator(),
-        "<Cancel>",
+        CANCEL_PROMPT,
       ],
     };
-
-    console.log("Question");
-    console.log(question);
-
     // query all necessary information
     inquirer
       .prompt([question])
       .then((answers) => {
-        console.log("Answer received: ");
-        console.log(answers);
-        resolve(answers.server);
+        if (answers.server === CANCEL_PROMPT) reject(CANCEL_PROMPT);
+        else resolve(answer.server);
       })
       .catch((error) => {
         console.log(error);

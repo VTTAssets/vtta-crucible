@@ -16,6 +16,16 @@ import mkdirp from "mkdirp";
 import Caddy from "../caddy/index.js";
 import pm2 from "../pm2/index.js";
 
+import portscanner from "portscanner";
+
+const findNextFreePort = () => {
+  return new Promise((resolve, reject) => {
+    portscanner.findAPortNotInUse(30000, 31000, (error, port) => {
+      resolve(port);
+    });
+  });
+};
+
 const create = async (serverConfig) => {
   console.log("Creating server with config");
   console.log(serverConfig);
@@ -32,11 +42,11 @@ const create = async (serverConfig) => {
     hostname: `${serverConfig.subdomainName}.${serverConfig.domainName}`,
     assignedLicense: serverConfig.licenseKey,
     release: serverConfig.release,
-    port: 30000,
+    port: null,
   };
 
   // update the port number
-  server.port = 30000 + environment.servers.length;
+  server.port = await findNextFreePort();
 
   // add this server to the list of servers for now
   environment.servers.push(server);

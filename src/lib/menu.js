@@ -2,6 +2,7 @@ import inquirer from "inquirer";
 import Prompts from "./prompts/index.js";
 
 import Server from "../servers/index.js";
+import ui from "./ui.js";
 
 const MENU_ITEM_BACK = (name, jumpLabel) => ({
   name: `=> Go back to ${name}`,
@@ -45,8 +46,23 @@ const serverMenu = {
       name: "Delete a Foundry VTT server",
       value: "MENU_ITEM_DELETE_SERVER",
       fn: async () => {
-        const selectedServer = await Prompts.selectServer();
-        console.log("Called 'Delete Server'");
+        try {
+          const selectedServerHostname = await Prompts.selectServer();
+          const environment = env.load();
+          const server = environment.servers.find(
+            (server) => server.hostname === selectedServerHostname
+          );
+          if (server) {
+            ui.log("Server deletion requested: " + server.hostname);
+            const confirmation = await Prompts.confirm(
+              "Do you really want to delete the server? This action cannot be reversed!"
+            );
+            if (confirmation) await Server.delete(server);
+          }
+        } catch (error) {
+          // Going back to the Manage menu
+          // not doing anything here will re-render
+        }
       },
     },
     {

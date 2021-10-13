@@ -32,6 +32,38 @@ const getRecords = async (personalAccessToken, domainName, instance = null) => {
   return instance.domains.getAllRecords(domainName, null, true);
 };
 
+/**
+ * Removes an existing A record for a specific subdomain.domain.suffix hostname
+ * @param {string} personalAccessToken Your Digital Ocean Personal Access Token with write permission
+ * @param {string} hostname The subdomain to delete
+ * @returns
+ */
+const deleteRecord = async (personalAccessToken, hostname) => {
+  const subdomainName = hostname.split(".").shift();
+  const domainName = hostname.replace(`${subdomainName}.`, "");
+
+  const instance = new DigitalOcean(personalAccessToken);
+
+  const records = getRecords(personalAccessToken, domaonName, instance);
+
+  const toDelete = records.find(
+    (record) => record.type === "A" && record.name === subdomainName
+  );
+
+  if (toDelete) {
+    await instance.domains.deleteRecord(domainName, toDelete.id);
+    return toDelete.data;
+  }
+  return false;
+};
+
+/**
+ * Adds a domain record
+ * @param {string} personalAccessToken Your Digital Ocean Personal Access Token with write permission
+ * @param {string} domainName The domain the record will be added to
+ * @param {string} subdomainName The record's name
+ * @returns
+ */
 const createRecord = async (personalAccessToken, domainName, subdomainName) => {
   const instance = new DigitalOcean(personalAccessToken);
 
@@ -79,4 +111,10 @@ const createRecord = async (personalAccessToken, domainName, subdomainName) => {
   return currentIp;
 };
 
-export default { list, getRecords, createRecord, isValidDomainName };
+export default {
+  list,
+  getRecords,
+  createRecord,
+  deleteRecord,
+  isValidDomainName,
+};

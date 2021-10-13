@@ -17,6 +17,7 @@
     "mkdirp": "^1.0.4",
     "node-fetch": "^3.0.0",
     "pm2": "^5.1.2",
+    "portscanner": "^2.2.0",
     "rimraf": "^3.0.2",
     "tough-cookie": "^4.0.0",
     "tough-cookie-file-store": "^2.0.3",
