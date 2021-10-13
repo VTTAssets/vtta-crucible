@@ -1,21 +1,31 @@
-import pm2 from "pm2";
+import pm2 from "../pm2/index.js";
+import Caddy from "../caddy/index.js";
+import env from "../lib/env.js";
+
 import ui from "../lib/ui.js";
 
-const list = async () => {
-  return new Promise((resolve, reject) => {
-    pm2.connect((err) => {
-      if (err) {
-        ui.log(
-          "Could not connect to Node Process Manager PM2, did you install it?",
-          "error"
-        );
-        process.exit(6);
-      }
+const list = () => {
+  return new Promise(async (resolve, reject) => {
+    const environment = env.load();
+    const processList = await pm2.list();
+    const configList = await Caddy.list();
 
-      pm2.list((err, list) => {
-        resolve(list);
-      });
+    // go through all configured servers
+    const servers = environment.servers.map((server) => {
+      let result = processList.find((srv) => srv.name === server.hostname);
+      if (result) {
+        Object.assign(server, result);
+      }
+      result = configList.find((srv) => srv.name === server.hostname);
+      if (result) {
+        Object.assign(server, result);
+      }
+      return server;
     });
+
+    console.log(servers);
+
+    resolve(servers);
   });
 };
 

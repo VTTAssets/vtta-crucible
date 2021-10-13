@@ -45,6 +45,7 @@ const serverMenu = {
       name: "Delete a Foundry VTT server",
       value: "MENU_ITEM_DELETE_SERVER",
       fn: async () => {
+        const selectedServer = await Prompts.selectServer();
         console.log("Called 'Delete Server'");
       },
     },

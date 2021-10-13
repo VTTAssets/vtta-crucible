@@ -14,8 +14,7 @@ import rimraf from "rimraf";
 import mkdirp from "mkdirp";
 
 import Caddy from "../caddy/index.js";
-
-import runtime from "./runtime.js";
+import pm2 from "../pm2/index.js";
 
 const create = async (serverConfig) => {
   console.log("Creating server with config");
@@ -186,7 +185,7 @@ const create = async (serverConfig) => {
 
   ui.log("Registering server at pm2...");
   try {
-    const serverRuntime = await runtime.register(server);
+    const serverRuntime = await pm2.register(server);
     ui.log("Registraton successful", "success");
   } catch (error) {
     ui.log(`Registration failed: ${error.message}`, "error");
