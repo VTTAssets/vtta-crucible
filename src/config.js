@@ -3,11 +3,11 @@ export default {
     level: "error",
   },
   store: {
-    cookies: "config/cookies.json",
-    env: "config/env.json",
-    releases: "/var/fvtt/releases",
-    servers: "/var/fvtt/servers",
-    spacesConfig: "/var/fvtt/servers/spacesConfig.json",
-    caddyConfigs: "/etc/caddy/fvtt",
+    cookies: "/etc/crucible/cookies.json",
+    env: "/etc/crucible/env.json",
+    releases: "/var/crucible/releases",
+    servers: "/var/crucible/servers",
+    spacesConfig: "/var/crucible/servers/spacesConfig.json",
+    caddyConfigs: "/etc/caddy/crucible",
   },
 };

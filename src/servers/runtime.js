@@ -94,6 +94,7 @@ const start = async (id) => {
 };
 
 const list = () => {
+  const environment = await env.load();
   return new Promise((resolve, reject) => {
     pm2.connect((error) => {
       if (error) {
