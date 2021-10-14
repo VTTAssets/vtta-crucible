@@ -35,6 +35,7 @@ const getDomainConfiguration = async (environment) => {
     const domains = await DO.domains.list(
       environment.credentials.digitalOcean.personalAccessToken
     );
+    console.log(domains);
 
     if (domains.length === 0) {
       ui.log(`You have no domains registered at Digital Ocean. Please go to a domain registrar, purchase a domain and register it within Digital Ocean. Registars are e.g.
