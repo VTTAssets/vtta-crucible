@@ -1,6 +1,7 @@
 import config from "../config.js";
 import ui from "../lib/ui.js";
 import pm2 from "pm2";
+import env from "../lib/env.js";
 
 const list = () => {
   return new Promise((resolve, reject) => {
@@ -22,23 +23,28 @@ const list = () => {
         }
         pm2.disconnect();
 
-        const condensedList = apps
-          .filter((app) => {
-            return app.pm2_env.cwd.indexOf(config.store.servers) !== -1;
-          })
-          .map((app) => {
-            return {
-              hostname: app.pm2_env.name,
-              id: parseInt(app.pm2_env.pm_id),
-              status: app.pm2_env.status,
-              resources: {
-                memory: Math.ceil(app.monit.memory / 1024 / 1024),
-                cpu: app.monit.cpu,
-              },
-            };
-          });
+        const servers = env.load().servers;
 
-        resolve(condensedList);
+        resolve(
+          servers.map((server) => {
+            const config = apps.find(
+              (app) => app.pm2_env.name === server.hostname
+            );
+            if (config) {
+              return {
+                hostname: server.hostname,
+                id: parseInt(app.pm2_env.pm_id),
+                status: app.pm2_env.status,
+                resources: app.monit
+                  ? {
+                      memory: Math.ceil(app.monit.memory / 1024 / 1024),
+                      cpu: app.monit.cpu,
+                    }
+                  : { memory: null, cpu: null },
+              };
+            }
+          })
+        );
       });
     });
   });

@@ -7,19 +7,20 @@ import ui from "../lib/ui.js";
 const list = () => {
   return new Promise(async (resolve, reject) => {
     const environment = env.load();
-    const processList = await pm2.list();
-    const configList = await Caddy.list();
+    const processes = await pm2.list();
+    const proxies = await Caddy.list();
 
     // go through all configured servers
     const servers = environment.servers.map((server) => {
-      let result = processList.find((srv) => srv.name === server.hostname);
-      if (result) {
-        Object.assign(server, result);
-      }
-      result = configList.find((srv) => srv.name === server.hostname);
-      if (result) {
-        Object.assign(server, result);
-      }
+      server.process = processes.find(
+        (proc) => proc.hostname === server.hostname
+      );
+      server.proxy = proxies.find(
+        (proxy) => proxy.hostname === server.hostname
+      );
+
+      delete server.process.hostnmame;
+      delete server.proxy.hostname;
 
       return server;
     });

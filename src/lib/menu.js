@@ -33,6 +33,28 @@ const mainMenu = {
 const serverMenu = {
   name: "Server Menu",
   value: "SERVER_MENU",
+  init: async () => {
+    const servers = await Server.list();
+
+    ui.h2("Server Overview");
+    for (let server of servers) {
+      ui.log(
+        `${server.hostname} ==> | Proxy: ${server.proxy.upstream} (Health: ${
+          server.proxy.healthy ? "Good" : "Not Good"
+        }) | ==> | Process: #${server.process.id} (Status: ${
+          server.process.status
+        }, Ressources: ${
+          server.process.ressources.memory
+            ? server.process.ressources.memory
+            : "(unknown)"
+        }MB RAM / ${
+          server.process.ressources.cpu
+            ? server.process.ressources.cpu
+            : "(unknown)"
+        } CPU)`
+      );
+    }
+  },
   entries: [
     {
       name: "Create new Foundry VTT server",
@@ -141,6 +163,9 @@ const show = async () => {
   do {
     menuCount++;
     const selection = await displayMenu(currentMenu);
+
+    // some menus have a "header"
+    if (selection.init) await selection.init();
 
     if (selection.fn === undefined) {
       // going to a menu, let's find it

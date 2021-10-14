@@ -1,4 +1,4 @@
-const createConfig = (hostname, port, pm2Id) => {
+const create = (hostname, port, pm2Id) => {
   const logId = "accessLog" + pmsId;
 
   const baseConfig = {
@@ -79,3 +79,5 @@ const createConfig = (hostname, port, pm2Id) => {
 
   return baseConfig;
 };
+
+export default create;

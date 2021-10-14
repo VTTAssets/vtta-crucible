@@ -49,6 +49,9 @@ const create = async (serverConfig) => {
   // add this server to the list of servers for now
   environment.servers.push(server);
 
+  // saving this server in the list
+  await env.save(environment);
+
   // create the dns record
   ui.log("Creating DNS record...");
   try {
@@ -179,25 +182,26 @@ const create = async (serverConfig) => {
 
   // ---------------------------------------------
 
-  try {
-    await Caddy.create(server.hostname, server.port);
-    ui.log("Configuring Caddy (reverse proxy)...");
-  } catch (error) {
-    ui.log("Error configuring Caddy", "error");
-    process.exit(1);
-  }
-
-  // ---------------------------------------------
-
+  let serverProcess;
   ui.log("Registering server at pm2...");
   try {
-    const serverRuntime = await pm2.create(server);
+    serverProcess = await pm2.create(server);
     ui.log("Registraton successful", "success");
   } catch (error) {
     ui.log(`Registration failed: ${error.message}`, "error");
     ui.log(
       "I will continue, but you should list the running process with `pm2 list` to see where the issue is originating from."
     );
+    process.exit(1);
+  }
+
+  // ---------------------------------------------
+  ui.log("Configuring Caddy (reverse proxy)...");
+  try {
+    await Caddy.create(server.hostname, server.port, serverProcess.id);
+    ui.log("Configuration with Caddy (reverse proxy) successful");
+  } catch (error) {
+    ui.log("Error configuring Caddy", "error");
     process.exit(1);
   }
 

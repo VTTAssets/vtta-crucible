@@ -1,8 +1,7 @@
 import config from "../config.js";
+import env from "../lib/env.js";
 
-import fetch from "node-fetch";
-import * as fs from "fs";
-import * as path from "path";
+import api from "./api.js";
 
 const API_PORT = 2019;
 
@@ -10,67 +9,69 @@ const API_PORT = 2019;
  * Retrieves Health information for upstream reverse_proxies from Caddy
  * Maps it to previously retrieved basic details
  */
-const health = async (configs) => {
-  return new Promise((resolve, reject) => {
-    fetch(`http://localhost:${API_PORT}/reverse_proxy/upstreams`)
-      .then((response) => {
-        if (response.ok) return response.json();
-      })
-      .then((json) => {
-        for (let info of json) {
-          const config = configs.find(
-            (config) => config.upstream === info.address
-          );
-          if (config) {
-            delete info.address; // duplicate info with .upstream
-            Object.assign(config, info);
-          }
-        }
-        resolve(configs);
-      })
-      .catch((error) => {
-        reject(error);
-      });
-  });
+const getUpstreams = async () => {
+  const upstreams = await api.get("/revers_proxy/upstreams");
+  return upstreams;
 };
 
+const parseConfig = (config) => {
+  let port = null;
+  try {
+    port = parseInt(config.listen[0].substring(1));
+  } catch (error) {
+    port = null;
+  }
+  let upstream = null;
+  try {
+    const reverseProxy = config.routes[0].handle[0].routes[0].handle.find(
+      (entry) => entry.handler === "reverse_proxy"
+    );
+    if (reverseProxy) {
+      upstream = reverseProxy.upstreams[0].dial;
+    }
+  } catch (error) {
+    upstream = null;
+  }
+
+  return { upstream, port };
+};
 /**
  * Retrieves a list of configured reverse_proxies
  */
 const list = async () => {
-  // filter the found configuration with fvtt configs we created
-  const configFiles = fs
-    .readdirSync(config.store.caddyConfigs, {
-      withFileTypes: true,
+  // get all configured servers
+  const environment = env.load();
+
+  const upstreamStatuses = await getUpstreams();
+  const result = await Promise.all(
+    environment.servers.map(async (server) => {
+      const result = {
+        hostname: server.hostname,
+        configured: false,
+        upstream: null,
+        healthy: null,
+      };
+
+      const config = await api.get(
+        "/config/apps/http/" + server.hostname,
+        "json"
+      );
+
+      // if config was not received
+      if (!config) return server;
+
+      const configuredProxy = parseConfig(config);
+      if (configuredProxy.upstream) {
+        const upstreamStatus = upstreamStatuses.find(
+          (entry) => entry.address === configuredProxy.upstream
+        );
+        result.upstream = configuredProxy.upstream;
+        result.healthy = upstreamStatus.healthy;
+      }
+
+      return result;
     })
-    .filter((entry) => entry.isFile)
-    .map((entry) => entry.name);
-
-  const configs = [];
-  for (let configFile of configFiles) {
-    const contents = fs.readFileSync(
-      path.resolve(config.store.caddyConfigs, configFile),
-      { encoding: "utf-8" }
-    );
-
-    const lines = contents.split("\n");
-
-    // # hostname: ${hostname}
-    // # port: ${port}
-    const hostname = lines
-      .filter((line) => line.search(/# hostname: (.+)/) !== -1)
-      .map((line) => line.split(":").pop().trim())
-      .shift();
-
-    const port = lines
-      .filter((line) => line.search(/# port: (\d+)/) !== -1)
-      .map((line) => parseInt(line.split(":").pop().trim()))
-      .shift();
-
-    configs.push({ hostname: hostname, upstream: "localhost:" + port });
-  }
-
-  return health(configs);
+  );
 };
 
 export default list;
