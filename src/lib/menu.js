@@ -35,7 +35,6 @@ const serverMenu = {
   name: "Server Menu",
   value: "SERVER_MENU",
   init: async () => {
-    console.log("Rendering Server Menu");
     const servers = await Server.list();
     console.log(servers);
 
@@ -72,6 +71,8 @@ const serverMenu = {
         } CPU)`
       );
     }
+
+    ui.separator(20);
   },
   entries: [
     {

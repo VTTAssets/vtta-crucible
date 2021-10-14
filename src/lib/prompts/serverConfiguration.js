@@ -27,9 +27,6 @@ const serverConfiguration = () => {
     ui.log(
       `In order to create a new server, you will need to **decide on several configuration options**. Some are related to **how the server will be accessed** later on, others will provide additional configuration as **which license to use** and if you want to **enable a (previously configured) Spaces storage**.`
     );
-    ui.h2("Pre-requisites");
-    ui.log(`1) You have registed at least one domain to Digital Ocean
-2) [optional: If you want to use Digital Ocean Spaces with this server] Digital Ocean spaces is enabled and configured`);
 
     ui.separator(20);
 
