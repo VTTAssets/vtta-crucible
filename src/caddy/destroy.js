@@ -1,19 +1,7 @@
-import * as path from "path";
-import { existsSync, unlinkSync } from "fs";
-import reload from "./reload.js";
-import config from "../config.js";
+import api from "./api.js";
 
-const destroy = async (hostname, port) => {
-  const caddyConfig = path.resolve(
-    config.store.caddyConfigs,
-    `${hostname}.conf`
-  );
-  if (existsSync(caddyConfig)) {
-    unlinkSync(caddyConfig);
-    await reload();
-  }
-
-  return true;
+const destroy = async (hostname) => {
+  return api.delete("/config/apps/http/servers/" + hostname);
 };
 
 export default destroy;

@@ -2,6 +2,22 @@ import fetch from "node-fetch";
 import ui from "../lib/ui.js";
 
 const api = {
+  delete: async (endpoint) => {
+    const request = {
+      method: "DELETE",
+    };
+
+    try {
+      const response = await fetch(
+        `http://localhost:2019/${endpoint}`,
+        request
+      );
+
+      return response.ok;
+    } catch (error) {
+      return false;
+    }
+  },
   post: async (endpoint, data) => {
     const request = {
       method: "POST",
@@ -19,7 +35,6 @@ const api = {
 
       return response.ok;
     } catch (error) {
-      ui.log("Could not create Caddy reverse proxy configuration", "error");
       return false;
     }
   },
