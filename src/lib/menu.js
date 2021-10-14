@@ -34,7 +34,9 @@ const serverMenu = {
   name: "Server Menu",
   value: "SERVER_MENU",
   init: async () => {
+    console.log("Rendering Server Menu");
     const servers = await Server.list();
+    console.log(servers);
 
     ui.h2("Server Overview");
     for (let server of servers) {
@@ -165,7 +167,7 @@ const show = async () => {
     const selection = await displayMenu(currentMenu);
 
     // some menus have a "header"
-    if (selection.init) await selection.init();
+    if (selection.init !== undefined) await selection.init();
 
     if (selection.fn === undefined) {
       // going to a menu, let's find it
