@@ -65,8 +65,8 @@ const serverMenu = {
             ? server.process.resources.memory
             : "(unknown)"
         }MB RAM / ${
-          server.process.ressources.cpu
-            ? server.process.ressources.cpu
+          server.process.resources.cpu
+            ? server.process.resources.cpu
             : "(unknown)"
         } CPU)`
       );
