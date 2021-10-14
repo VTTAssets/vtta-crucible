@@ -63,7 +63,7 @@ const list = async () => {
       };
 
       const config = await api.get(
-        "/config/apps/http/" + server.hostname,
+        "/config/apps/http/servers/" + server.hostname,
         "json"
       );
 
