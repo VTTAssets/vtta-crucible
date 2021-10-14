@@ -47,6 +47,13 @@ const list = () => {
                     }
                   : { memory: null, cpu: null },
               };
+            } else {
+              return {
+                hostname: server.hostname,
+                id: null,
+                status: "not registered",
+                resources: { memory: null, cpu: null },
+              };
             }
           })
         );

@@ -19,6 +19,8 @@ import getFoundryVttProfile from "./setup/getFoundryVttProfile.js";
 import createFolders from "./setup/createFolders.js";
 import getRuntimeInformation from "./setup/getRuntimeInformation.js";
 
+import Servers from "../../servers/index.js";
+
 // const setup = async () => {
 //   const environment = await env.load();
 
@@ -295,16 +297,7 @@ const setup = async () => {
   /**
    * Get information about currently running servers
    */
-  const runtimeInfo = await getRuntimeInformation();
-  for (let server of runtimeInfo) {
-    // display some little info tidbits for this server
-    ui.log(
-      `${server.hostname}: ${server.status} => ${
-        server.upstream ? server.upstream : "(no proxy configured)"
-      }. Health status: ${server.healthy ? "Good" : "Not Good"})`,
-      server.healthy ? "success" : "warn"
-    );
-  }
+  await Servers.displayOverview();
 
   /**
    * Done with Setup, the script can now successfully start
