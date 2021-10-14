@@ -8,11 +8,11 @@ const MENUS = [mainMenu, serverMenu, worldMenu];
 
 const displayMenu = (menu) => {
   // insert a seperator before the last menu.entries entry
-  const entries = [
-    ...menu.entries.slice(0, menu.entries.length - 2),
-    new inquirer.Separator(),
-    menu.entries[menu.entries.length - 1],
-  ];
+  const entries = [...menu.entries];
+  entries.pop();
+  entries.push(new inquirer.Separator());
+  entries.push(menu.entries[menu.entries.length - 1]);
+
   return new Promise((resolve, reject) => {
     inquirer
       .prompt([
