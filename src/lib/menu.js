@@ -41,19 +41,19 @@ const serverMenu = {
 
     ui.h2("Server Overview");
     const maxInstanceCount = droplet.getRecommendedFoundryInstancesCount();
-    ui.log(
-      `Servers configured: ${servers.length} ${servers.length ? `(${servers
-        .map((server) => server.name)
-        .join(","))` : 'None')}`;
-    );
-    ui.log(
-      `Maximum recommended Foundry Server count for this Droplet: ${maxInstanceCount}`,
-      servers.length < maxInstanceCount
-        ? "success"
-        : servers.length === maxInstanceCount
-        ? "warn"
-        : "error"
-    );
+    if (servers.length) {
+      ui.log(`Servers configured: ${servers.length} ${servers.length}`);
+      ui.log(
+        `Maximum recommended Foundry Server count for this Droplet: ${maxInstanceCount}`,
+        servers.length < maxInstanceCount
+          ? "success"
+          : servers.length === maxInstanceCount
+          ? "warn"
+          : "error"
+      );
+    } else {
+      ui.log("Servers configured: None");
+    }
 
     for (let server of servers) {
       ui.log(
