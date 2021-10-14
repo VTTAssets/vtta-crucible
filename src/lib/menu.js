@@ -164,10 +164,9 @@ const show = async () => {
   let menuCount = 0;
   do {
     menuCount++;
-    const selection = await displayMenu(currentMenu);
-
     // some menus have a "header"
-    if (selection.init !== undefined) await selection.init();
+    if (currentMenu.init !== undefined) await currentMenu.init();
+    const selection = await displayMenu(currentMenu);
 
     if (selection.fn === undefined) {
       // going to a menu, let's find it
