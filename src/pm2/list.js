@@ -30,8 +30,6 @@ const list = () => {
             const config = apps.find(
               (app) => app.pm2_env.name === server.hostname
             );
-            console.log("pm2 config");
-            console.log(config);
             if (config) {
               return {
                 hostname: server.hostname,
