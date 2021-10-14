@@ -46,9 +46,9 @@ const serverMenu = {
         .map((server) => server.name)
         .join(",")}, maximum recommended Foundry Server count: 
         #${maxInstanceCount}`,
-      maxInstanceCount < server.length
+      maxInstanceCount < servers.length
         ? "success"
-        : maxInstanceCount === server.length
+        : maxInstanceCount === servers.length
         ? "warn"
         : "error"
     );
