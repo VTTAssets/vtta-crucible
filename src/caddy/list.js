@@ -11,6 +11,9 @@ const API_PORT = 2019;
  */
 const getUpstreams = async () => {
   const upstreams = await api.get("/revers_proxy/upstreams");
+  console.log("getUpStreams(): ");
+  console.log(upstreams);
+  console.log("--");
   return upstreams;
 };
 
@@ -43,7 +46,10 @@ const list = async () => {
   const environment = env.load();
 
   const upstreamStatuses = await getUpstreams();
-  const result = await Promise.all(
+
+  console.log("Upstreams");
+  console.log(upstreams);
+  return await Promise.all(
     environment.servers.map(async (server) => {
       const result = {
         hostname: server.hostname,
