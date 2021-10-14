@@ -79,7 +79,7 @@ const list = async () => {
       console.log(configuredProxy);
       if (configuredProxy.upstream) {
         const upstreamStatus = upstreamStatuses.find(
-          (entry) => entry.address === configuredProxy.upstream
+          (entry) => entry.dial === configuredProxy.upstream
         );
         result.upstream = configuredProxy.upstream;
         result.healthy = upstreamStatus.healthy;
