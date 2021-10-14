@@ -1,7 +1,7 @@
 import ui from "../lib/ui.js";
 import list from "./list.js";
 
-const displayOverview = () => {
+const displayOverview = async () => {
   const servers = await list();
 
   ui.h2("Servers Overview");
