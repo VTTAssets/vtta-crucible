@@ -98,6 +98,9 @@ const serverConfiguration = () => {
         },
       ])
       .then((answers) => {
+        // create the hostname and add the domainName, too
+        answers.domainName = environment.meta.digitalOcean.domain.name;
+        answers.hostname = `${answers.subdomainName}.${environment.meta.digitalOcean.domain.name}`;
         // If spaces is not configured, we set it to disabled to have a consistent UI later on
         answers.spacesEnabled =
           answers.spacesEnabled === undefined ? false : answers.spacesEnabled;
