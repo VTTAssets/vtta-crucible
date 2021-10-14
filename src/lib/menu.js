@@ -41,9 +41,9 @@ const serverMenu = {
     ui.h2("Server Overview");
     const maxInstanceCount = droplet.getRecommendedFoundryInstancesCount();
     if (servers.length) {
-      ui.log(`Servers configured: ${servers.length} ${servers.length}`);
+      ui.log(`Servers configured: ${servers.length}/${maxInstanceCount} *`);
       ui.log(
-        `Maximum recommended Foundry Server count for this Droplet: ${maxInstanceCount}`,
+        `* Maximum recommended Foundry Server count for this Droplet: ${maxInstanceCount}. This value is based on available memory.`,
         servers.length < maxInstanceCount
           ? "success"
           : servers.length === maxInstanceCount
@@ -61,8 +61,8 @@ const serverMenu = {
         }) | ==> | Process: #${server.process.id} (Status: ${
           server.process.status
         }, Ressources: ${
-          server.process.ressources.memory
-            ? server.process.ressources.memory
+          server.process.resources.memory
+            ? server.process.resources.memory
             : "(unknown)"
         }MB RAM / ${
           server.process.ressources.cpu
