@@ -47,8 +47,6 @@ const list = async () => {
 
   const upstreamStatuses = await getUpstreams();
 
-  console.log("Upstreams");
-  console.log(upstreams);
   return await Promise.all(
     environment.servers.map(async (server) => {
       const result = {
