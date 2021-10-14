@@ -1,6 +1,6 @@
 import ui from "../lib/ui.js";
 import list from "./list.js";
-
+import caddy from "../caddy/index.js";
 const displayOverview = async () => {
   const servers = await list();
 
@@ -31,6 +31,7 @@ const displayOverview = async () => {
       );
     } else {
       ui.log(`Reverse Proxy (Caddy): Not registered`, "error", true);
+      await caddy.create(server.hostname, server.port, server.process.id);
     }
   }
 };
