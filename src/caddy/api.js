@@ -11,29 +11,15 @@ const api = {
       body: JSON.stringify(data),
     };
 
-    console.log("CADDY API POST to " + `http://localhost:2019/${endpoint}`);
-    console.log(request);
-
     try {
       const response = await fetch(
         `http://localhost:2019/${endpoint}`,
         request
       );
 
-      if (response.ok) {
-        console.log("Response is okay");
-
-        let json = await response.json();
-        console.log(json);
-        console.log("---");
-        return true;
-      } else {
-        console.log("Response is not okay");
-        console.log(response);
-      }
+      return response.ok;
     } catch (error) {
       ui.log("Could not create Caddy reverse proxy configuration", "error");
-      console.log(error);
       return false;
     }
   },
