@@ -209,6 +209,7 @@ const setup = async () => {
         await configureDigitalOceanCredential(
           environment.credentials.digitalOcean
         );
+      await env.save(environment);
     }
   } while (result === false);
 
@@ -244,6 +245,7 @@ const setup = async () => {
         result = true;
       }
       environment.credentials.digitalOceanSpaces = spacesConfiguration;
+      await env.save(environment);
     }
   } while (result === false);
 
@@ -260,6 +262,7 @@ const setup = async () => {
       environment.credentials.foundryVtt = await configureFoundryVttCredential(
         environment.credentials.foundryVtt
       );
+      await env.save(environment);
     }
   } while (result === false);
 
