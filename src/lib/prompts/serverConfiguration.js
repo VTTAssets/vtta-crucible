@@ -39,36 +39,29 @@ const serverConfiguration = () => {
     inquirer
       .prompt([
         {
-          type: "list",
-          name: "domainName",
-          message:
-            "Select a domain which will be used. A subdomain name will be specified in the next step",
-          choices: domains,
-        },
-        {
           type: "string",
           name: "subdomainName",
           message: "Enter a subdomain",
           transformer: (input, answers, option) => {
-            return `${input}.${answers.domainName}`;
+            return `${input}.${environment.meta.digitalOcean.domain.name}`;
           },
           validate: async (input, answers) => {
             const validName = DO.domains.isValidDomainName(
-              `${input}.${answers.domainName}`
+              `${input}.${environment.meta.digitalOcean.domain.name}`
             );
             if (!validName)
               return "Not a valid domain name. Please use only alphanumeric characters and hypens";
-            // check if name is already in use
 
+            // check if name is already in use
             const records = await DO.domains.getRecords(
               environment.credentials.digitalOcean.personalAccessToken,
-              answers.domainName
+              environment.meta.digitalOcean.domain.name
             );
             const existingPointer = records.find(
               (record) => record.name === input
             );
             if (existingPointer) {
-              return `${input}.${answers.domainName} is already configured for ${existingPointer.data}`;
+              return `${input}.${environment.meta.digitalOcean.domain.name} is already configured, pointing to ${existingPointer.data}`;
             }
             // all good
             return true;

@@ -31,12 +31,16 @@ echo "Done."
 # b) route traffic from our players to our installed Foundry VTT servers
 echo -ne "Installing Caddy (reverse proxy)..."
 apt-get install -y caddy > /dev/null 2>&1
+# Disabling regular Caddyfile configuration, instead using...
+sudo systemctl disable --now caddy > /dev/null 2>&1
+# ... configuration via API
+sudo systemctl enable --now caddy-api > /dev/null 2>&1
 echo "Done."
 
 # Create a subdirectory to store a Caddyfile per FVTT server
-mkdir -p /etc/caddy/crucible
+# mkdir -p /etc/caddy/crucible
 # Add a reference to all config files stored in this directory to the main Caddyfile
-grep -qxF 'import /etc/caddy/crucible/*' /etc/caddy/Caddyfile || echo 'import /etc/caddy/crucible/*' >>  /etc/caddy/Caddyfile
+# grep -qxF 'import /etc/caddy/crucible/*' /etc/caddy/Caddyfile || echo 'import /etc/caddy/crucible/*' >>  /etc/caddy/Caddyfile
 
 # Install the process manager for node.js processes 
 echo -ne "Installing pm2 (node process manager)..."
@@ -57,6 +61,6 @@ echo "------------------------------------------"
 echo "Installing crucible..."
 git clone https://github.com/VTTAssets/vtta-crucible.git 2>&1 && cd vtta-crucible && npm install 2>&1
 chmod +x src/cli.js 2>&1
-npm link
+# npm link
 
 echo "Done."

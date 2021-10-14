@@ -3,6 +3,7 @@ import createLogger from "../lib/logging.js";
 import { readFileSync, writeFileSync } from "fs";
 
 const DEFAULT = {
+  servers: [],
   credentials: {
     foundryVtt: {
       label: "Foundry VTT (foundryvtt.com)",
@@ -22,17 +23,15 @@ const DEFAULT = {
       region: "",
     },
   },
-
   meta: {
     foundryVtt: {
       releases: [],
       licenses: [],
     },
     digitalOcean: {
-      domains: [],
+      domain: {},
     },
   },
-  servers: [],
 };
 
 /**

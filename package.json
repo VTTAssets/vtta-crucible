@@ -11,6 +11,7 @@
     "cli-progress": "^3.9.1",
     "do-wrapper": "^4.5.1",
     "docopt": "^0.6.2",
+    "express": "^4.17.1",
     "fetch-cookie": "^1.0.0",
     "inquirer": "^8.2.0",
     "is-valid-domain": "^0.1.2",

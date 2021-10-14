@@ -157,9 +157,7 @@ const create = async (serverConfig) => {
     routePrefix: null,
     sslCert: null,
     sslKey: null,
-    awsConfig: serverConfig.spacesEnabled
-      ? path.resolve(config.store.spacesConfig)
-      : null,
+    awsConfig: serverConfig.spacesEnabled ? config.store.spacesConfig : null,
     dataPath: `${path.resolve(
       `${config.store.servers}/${server.hostname}`
     )}/data`,

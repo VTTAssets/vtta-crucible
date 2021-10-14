@@ -272,11 +272,13 @@ const setup = async () => {
    * Digital Ocean: Registered Domains
    */
   let domainConfiguration = await getDomainConfiguration(environment);
-  environment.meta.digitalOcean.domains = domainConfiguration;
+  environment.meta.digitalOcean.domain = domainConfiguration;
   ui.log(
-    `Retrieved information about ${domainConfiguration.length} domain${
-      domainConfiguration.length > 1 ? "s" : ""
-    }.`,
+    `Using ${domainConfiguration.name} as domain, found ${
+      domainConfiguration.records.length
+    } subdomain${
+      domainConfiguration.records.length > 1 ? "s" : ""
+    } already configured.`,
     "success"
   );
 

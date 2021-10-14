@@ -10,4 +10,7 @@ export default {
     spacesConfig: "/var/crucible/servers/spacesConfig.json",
     caddyConfigs: "/etc/caddy/crucible",
   },
+  www: {
+    port: process.env.PORT || 3000,
+  },
 };
