@@ -13,7 +13,7 @@ const create = async (hostname, port, pm2Id) => {
     encoding: "utf-8",
   });
   console.log(`stored at ${hostname}-config.json`);
-  const result = await api.post("/load", config);
+  const result = await api.post("load", config);
   console.log("Result from Caddy API call");
   console.log(result);
   return result;

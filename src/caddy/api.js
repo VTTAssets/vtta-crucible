@@ -27,6 +27,9 @@ const api = {
         console.log(json);
         console.log("---");
         return true;
+      } else {
+        console.log("Response is not okay");
+        console.log(response);
       }
     } catch (error) {
       ui.log("Could not create Caddy reverse proxy configuration", "error");
