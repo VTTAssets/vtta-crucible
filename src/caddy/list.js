@@ -10,7 +10,7 @@ const API_PORT = 2019;
  * Maps it to previously retrieved basic details
  */
 const getUpstreams = async () => {
-  const upstreams = await api.get("/revers_proxy/upstreams");
+  const upstreams = await api.get("/reverse_proxy/upstreams");
   console.log("getUpStreams(): ");
   console.log(upstreams);
   console.log("--");
