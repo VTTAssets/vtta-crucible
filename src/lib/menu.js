@@ -71,8 +71,6 @@ const serverMenu = {
         } CPU)`
       );
     }
-
-    ui.separator(20);
   },
   entries: [
     {
@@ -183,6 +181,7 @@ const show = async () => {
     menuCount++;
     // some menus have a "header"
     if (currentMenu.init !== undefined) await currentMenu.init();
+    ui.separator(20);
     const selection = await displayMenu(currentMenu);
 
     if (selection.fn === undefined) {
