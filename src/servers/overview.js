@@ -26,7 +26,7 @@ const displayOverview = async () => {
     //   };
     if (server.proxy.configured) {
       ui.log(
-        `Reverse Proxy (Caddy): ${upstream}, status: ${
+        `Reverse Proxy (Caddy): ${server.proxy.upstream}, status: ${
           server.proxy.healthy ? "Healthy" : "Not healthy"
         }`
       );
