@@ -61,7 +61,7 @@ const getDomainConfiguration = async (environment) => {
   // Updating the subdomain for the selected domain
   const domainRecords = await DO.domains.getRecords(
     environment.credentials.digitalOcean.personalAccessToken,
-    selectedDomain
+    environment.meta.digitalOcean.domain.name
   );
 
   environment.meta.digitalOcean.domain.records = domainRecords
