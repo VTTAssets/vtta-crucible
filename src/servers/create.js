@@ -27,6 +27,26 @@ const findNextFreePort = () => {
   });
 };
 
+/**
+ * Extracts a ZIP into a directory
+ * @param {string} input Path to zip file
+ * @param {string} output output path
+ * @returns
+ */
+const unzip = (input, output) => {
+  return new Promise((resolve, reject) => {
+    fs.createReadStream(input)
+      .pipe(
+        unzipper.Extract({
+          path: output,
+        })
+      )
+      .on("close", (err) => {
+        resolve(true);
+      });
+  });
+};
+
 const create = async (serverConfig) => {
   const environment = await env.load();
   // {
@@ -102,18 +122,12 @@ const create = async (serverConfig) => {
     ui.log("Release found in local libray, no download necessary.");
   }
 
-  // const archive = new AdmZip(
-  //   `${config.store.releases}/${desiredRelease.build}.zip`
-  // );
-
   // ---------------------------------------------
   ui.log("Extracting Foundry VTT release (this may take a moment)...");
-  fs.createReadStream(
-    `${config.store.releases}/${desiredRelease.build}.zip`
-  ).pipe(
-    unzipper.Extract({ path: `${config.store.servers}/${server.hostname}/bin` })
+  await unzip(
+    `${config.store.releases}/${desiredRelease.build}.zip`,
+    `${config.store.servers}/${server.hostname}/bin`
   );
-  //await archive.extractAllTo(`${config.store.servers}/${server.hostname}/bin`);
   ui.log("Extracted Foundry VTT server binary", "success");
 
   // ---------------------------------------------
