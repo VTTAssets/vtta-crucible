@@ -180,7 +180,7 @@ const create = async (serverConfig) => {
     routePrefix: null,
     sslCert: null,
     sslKey: null,
-    awsConfig: serverConfig.spacesEnabled ? config.store.spacesConfig : null,
+    awsConfig: serverConfig.spacesEnabled ? "do-spaces.json" : null,
     dataPath: `${path.resolve(
       `${config.store.servers}/${server.hostname}`
     )}/data`,
@@ -193,6 +193,23 @@ const create = async (serverConfig) => {
     world: null,
   };
 
+  // Outputting spaces config, if necessary
+  if (serverConfig.spacesEnabled) {
+    fs.writeFileSync(
+      `${config.store.servers}/${server.hostname}/data/Config/do-spaces.json`,
+      JSON.stringify(
+        {
+          accessKeyId: environment.credentials.digitalOceanSpaces.accessKeyId,
+          secretAccessKey:
+            environment.credentials.digitalOceanSpaces.secretAccessKey,
+          region: environment.credentials.digitalOceanSpaces.region,
+        },
+        null,
+        3
+      ),
+      { encoding: "utf-8" }
+    );
+  }
   fs.writeFileSync(
     `${config.store.servers}/${server.hostname}/data/Config/options.json`,
     JSON.stringify(options, null, 3),
