@@ -172,7 +172,7 @@ const create = async (serverConfig) => {
 
   ui.log("Creating Foundry VTT configuration file...");
   const options = {
-    port: server.port,
+    // port: server.port, // set as pm2 arg
     upnp: true,
     fullscreen: false,
     hostname: `${server.hostname}`,
@@ -181,9 +181,7 @@ const create = async (serverConfig) => {
     sslCert: null,
     sslKey: null,
     awsConfig: serverConfig.spacesEnabled ? "do-spaces.json" : null,
-    dataPath: `${path.resolve(
-      `${config.store.servers}/${server.hostname}`
-    )}/data`,
+    // dataPath: null, // set as pm2 argument
     proxySSL: true,
     proxyPort: 443,
     minifyStaticFiles: false,
