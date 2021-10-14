@@ -2,6 +2,7 @@ import inquirer from "inquirer";
 import Prompts from "./prompts/index.js";
 
 import Server from "../servers/index.js";
+import droplet from "../digitalocean/droplet.js";
 import ui from "./ui.js";
 import env from "./env.js";
 
@@ -39,6 +40,19 @@ const serverMenu = {
     console.log(servers);
 
     ui.h2("Server Overview");
+    const maxInstanceCount = droplet.getRecommendedFoundryInstancesCount();
+    ui.log(
+      `**${servers.length} servers configured: ${servers
+        .map((server) => server.name)
+        .join(",")}, maximum recommended Foundry Server count: 
+        #${maxInstanceCount}`,
+      maxInstanceCount < server.length
+        ? "success"
+        : maxInstanceCount === server.length
+        ? "warn"
+        : "error"
+    );
+
     for (let server of servers) {
       ui.log(
         `${server.hostname} ==> | Proxy: ${server.proxy.upstream} (Health: ${
