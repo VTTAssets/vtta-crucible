@@ -9,10 +9,12 @@ const displayOverview = async () => {
     ui.h3(server.hostname);
     if (server.process.id) {
       ui.log(
-        `Process Manager (pm2): **ID${server.process.id}**, ${server.process.status}`
+        `Process Manager (pm2): **ID${server.process.id}**, ${server.process.status}`,
+        "success",
+        true
       );
     } else {
-      ui.log(`Process Manager (pm2): Not registered`);
+      ui.log(`Process Manager (pm2): Not registered`, "error", true);
     }
 
     // const result = {
@@ -28,7 +30,7 @@ const displayOverview = async () => {
         }`
       );
     } else {
-      ui.log(`Reverse Proxy (Caddy): Not registered`);
+      ui.log(`Reverse Proxy (Caddy): Not registered`, "error", true);
     }
   }
 };

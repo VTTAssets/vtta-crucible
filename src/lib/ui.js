@@ -53,7 +53,7 @@ const boldify = (str) => {
     .join("");
 };
 
-export const log = (message, status = "regular") => {
+export const log = (message, status = "regular", slim = false) => {
   message = split(message);
   const maxLineLength = 85;
   // message
@@ -67,10 +67,13 @@ export const log = (message, status = "regular") => {
       console.log(chalk.green("✓   " + message));
       break;
     case "error":
-      console.log(chalk.red(line + "\n" + "✘   " + message + "\n" + line));
+      if (slim) console.log(chalk.red("✘   " + message));
+      else console.log(chalk.red(line + "\n" + "✘   " + message + "\n" + line));
       break;
     case "warn":
-      console.log(chalk.yellow(line + "\n" + "⚠  " + message + "\n" + line));
+      if (slim) console.log(chalk.yellow("⚠  " + message));
+      else
+        console.log(chalk.yellow(line + "\n" + "⚠  " + message + "\n" + line));
       break;
     default:
       console.log(boldify(message));
