@@ -1,4 +1,3 @@
-import { ConfigurationServicePlaceholders } from "aws-sdk/lib/config_service_placeholders";
 import fetch from "node-fetch";
 import ui from "../lib/ui.js";
 
