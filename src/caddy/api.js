@@ -1,3 +1,4 @@
+import { ConfigurationServicePlaceholders } from "aws-sdk/lib/config_service_placeholders";
 import fetch from "node-fetch";
 import ui from "../lib/ui.js";
 
@@ -11,6 +12,9 @@ const api = {
       body: JSON.stringify(data),
     };
 
+    console.log("CADDY API POST to " + `http://localhost:2019/${endpoint}`);
+    console.log(request);
+
     try {
       const response = await fetch(
         `http://localhost:2019/${endpoint}`,
@@ -18,6 +22,11 @@ const api = {
       );
 
       if (response.ok) {
+        console.log("Response is okay");
+
+        let json = await response.json();
+        console.log(json);
+        console.log("---");
         return true;
       }
     } catch (error) {
