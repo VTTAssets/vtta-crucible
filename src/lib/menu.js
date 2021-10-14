@@ -42,9 +42,9 @@ const serverMenu = {
     ui.h2("Server Overview");
     const maxInstanceCount = droplet.getRecommendedFoundryInstancesCount();
     ui.log(
-      `Servers configured: ${servers.length} (${servers
+      `Servers configured: ${servers.length} ${servers.length ? `(${servers
         .map((server) => server.name)
-        .join(",")}).`
+        .join(","))` : 'None')}`;
     );
     ui.log(
       `Maximum recommended Foundry Server count for this Droplet: ${maxInstanceCount}`,
