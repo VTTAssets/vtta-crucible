@@ -7,7 +7,7 @@ import Screens from "./lib/prompts/index.js";
 
 import docopt from "docopt";
 import env from "./lib/env.js";
-import Menu from "./lib/menu.js";
+import Menu from "./lib/menus/index.js";
 import ui from "./lib/ui.js";
 
 const doc = `

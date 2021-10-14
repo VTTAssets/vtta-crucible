@@ -25,7 +25,7 @@
     "winston": "^3.3.3"
   },
   "scripts": {
-    "start": "node --no-warnings src/cli.js"
+    "start": "node --trace-warnings src/cli.js"
   },
   "type": "module",
   "bin": {
