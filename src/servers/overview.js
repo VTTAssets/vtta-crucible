@@ -1,6 +1,7 @@
 import ui from "../lib/ui.js";
 import list from "./list.js";
 import caddy from "../caddy/index.js";
+
 const displayOverview = async () => {
   const servers = await list();
 
@@ -36,4 +37,4 @@ const displayOverview = async () => {
   }
 };
 
-export default displayOverview();
+export default displayOverview;
