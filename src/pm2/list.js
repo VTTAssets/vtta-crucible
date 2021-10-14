@@ -30,15 +30,17 @@ const list = () => {
             const config = apps.find(
               (app) => app.pm2_env.name === server.hostname
             );
+            console.log("pm2 config");
+            console.log(config);
             if (config) {
               return {
                 hostname: server.hostname,
-                id: parseInt(app.pm2_env.pm_id),
-                status: app.pm2_env.status,
-                resources: app.monit
+                id: parseInt(config.pm2_env.pm_id),
+                status: config.pm2_env.status,
+                resources: config.monit
                   ? {
-                      memory: Math.ceil(app.monit.memory / 1024 / 1024),
-                      cpu: app.monit.cpu,
+                      memory: Math.ceil(config.monit.memory / 1024 / 1024),
+                      cpu: config.monit.cpu,
                     }
                   : { memory: null, cpu: null },
               };
