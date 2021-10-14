@@ -9,7 +9,7 @@ const displayOverview = async () => {
     ui.h3(server.hostname);
     if (server.process.id) {
       ui.log(
-        `Process Manager (pm2): **ID${processId}**, ${server.process.status}`
+        `Process Manager (pm2): **ID${server.process.id}**, ${server.process.status}`
       );
     } else {
       ui.log(`Process Manager (pm2): Not registered`);
