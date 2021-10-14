@@ -94,6 +94,19 @@ const create = async (serverConfig) => {
     process.exit(7);
   }
 
+  // ---------------------------------------------
+  // Starting this early will initiate SSL certificate creation early, too
+  ui.log("Configuring Caddy (reverse proxy)...");
+  try {
+    await Caddy.create(server.hostname, server.port, serverProcess.id);
+    ui.log("Configuration with Caddy (reverse proxy) successful");
+  } catch (error) {
+    ui.log("Error configuring Caddy", "error");
+    process.exit(1);
+  }
+
+  // ---------------------------------------------
+
   const desiredRelease = environment.meta.foundryVtt.releases.find(
     (release) => release.build === serverConfig.release
   );
@@ -230,16 +243,6 @@ const create = async (serverConfig) => {
     process.exit(1);
   }
 
-  // ---------------------------------------------
-  ui.log("Configuring Caddy (reverse proxy)...");
-  try {
-    await Caddy.create(server.hostname, server.port, serverProcess.id);
-    ui.log("Configuration with Caddy (reverse proxy) successful");
-  } catch (error) {
-    ui.log("Error configuring Caddy", "error");
-    process.exit(1);
-  }
-
   // saving this server in the list
   await env.save(environment);
 
@@ -253,8 +256,6 @@ const create = async (serverConfig) => {
   
   Enjoy your games!
   `);
-
-  process.exit(0);
 };
 
 export default create;
