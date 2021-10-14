@@ -78,11 +78,22 @@ const list = async () => {
       console.log("Done parsing config");
       console.log(configuredProxy);
       if (configuredProxy.upstream) {
+        // [
+        //   {
+        //     address: "localhost:30001",
+        //     healthy: true,
+        //     num_requests: 0,
+        //     fails: 0,
+        //   },
+        // ];
         const upstreamStatus = upstreamStatuses.find(
-          (entry) => entry.dial === configuredProxy.upstream
+          (entry) => entry.address === configuredProxy.upstream
         );
+        console.log("Found upstreamStatus:");
+        console.log(upstreamStatus);
         result.upstream = configuredProxy.upstream;
         result.healthy = upstreamStatus.healthy;
+        result.configured = result.upstream && result.healthy !== undefined;
       }
 
       console.log("Result for " + server.hostname);
