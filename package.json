@@ -22,6 +22,7 @@
     "rimraf": "^3.0.2",
     "tough-cookie": "^4.0.0",
     "tough-cookie-file-store": "^2.0.3",
+    "unzipper": "^0.10.11",
     "winston": "^3.3.3"
   },
   "scripts": {

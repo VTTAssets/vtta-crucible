@@ -4,7 +4,8 @@ import config from "../config.js";
 import DO from "../digitalocean/index.js";
 import ui from "../lib/ui.js";
 
-import AdmZip from "adm-zip";
+// import AdmZip from "adm-zip";
+import unzipper from "unzipper";
 
 import * as fs from "fs";
 import * as path from "path";
@@ -101,13 +102,18 @@ const create = async (serverConfig) => {
     ui.log("Release found in local libray, no download necessary.");
   }
 
-  const archive = new AdmZip(
-    `${config.store.releases}/${desiredRelease.build}.zip`
-  );
+  // const archive = new AdmZip(
+  //   `${config.store.releases}/${desiredRelease.build}.zip`
+  // );
 
   // ---------------------------------------------
   ui.log("Extracting Foundry VTT release (this may take a moment)...");
-  await archive.extractAllTo(`${config.store.servers}/${server.hostname}/bin`);
+  fs.createReadStream(
+    `${config.store.releases}/${desiredRelease.build}.zip`
+  ).pipe(
+    unzipper.Extract({ path: `${config.store.servers}/${server.hostname}/bin` })
+  );
+  //await archive.extractAllTo(`${config.store.servers}/${server.hostname}/bin`);
   ui.log("Extracted Foundry VTT server binary", "success");
 
   // ---------------------------------------------
