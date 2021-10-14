@@ -17,17 +17,17 @@ const split = (str, maxLength = 80) => {
 
 export const h1 = (message) => {
   message = split(message);
-  console.log(chalk.blue.underline.bold("# " + message));
+  console.log(chalk.blue.underline.bold("\n# " + message));
 };
 
 export const h2 = (message) => {
   message = split(message);
-  console.log(chalk.blue.bold("## " + message));
+  console.log(chalk.blue.bold("\n## " + message));
 };
 
 export const h3 = (message) => {
   message = split(message);
-  console.log(chalk.bold("### " + message));
+  console.log(chalk.bold("\n### " + message));
 };
 
 export const separator = (sepLength = 80, maxLength = 80) => {
