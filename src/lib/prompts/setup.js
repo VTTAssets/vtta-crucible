@@ -300,7 +300,7 @@ const setup = async () => {
     // display some little info tidbits for this server
     ui.log(
       `${server.hostname}: ${server.status} => ${
-        server.upstream
+        server.upstream ? server.upstream : "(no proxy configured)"
       }. Health status: ${server.healthy ? "Good" : "Not Good"})`,
       server.healthy ? "success" : "warn"
     );
