@@ -14,7 +14,6 @@ const serverMenu = {
   value: VALUE,
   init: async () => {
     const servers = await Servers.list();
-    console.log(servers);
 
     ui.h2("Server Overview");
     const maxInstanceCount = droplet.getRecommendedFoundryInstancesCount();
@@ -69,20 +68,20 @@ const serverMenu = {
         }
       },
     },
-    {
-      name: "(Re)start a Foundry VTT server",
-      value: "MENU_ITEM_START_SERVER",
-      fn: async () => {
-        console.log("Called 'Start Server'");
-      },
-    },
-    {
-      name: "Stop a Foundry VTT server",
-      value: "MENU_ITEM_SHUTDOWN_SERVER",
-      fn: async () => {
-        console.log("Called 'Shutdown Server'");
-      },
-    },
+    // {
+    //   name: "(Re)start a Foundry VTT server",
+    //   value: "MENU_ITEM_START_SERVER",
+    //   fn: async () => {
+    //     console.log("Called 'Start Server'");
+    //   },
+    // },
+    // {
+    //   name: "Stop a Foundry VTT server",
+    //   value: "MENU_ITEM_SHUTDOWN_SERVER",
+    //   fn: async () => {
+    //     console.log("Called 'Shutdown Server'");
+    //   },
+    // },
     mainMenu.reference,
   ],
   reference: {

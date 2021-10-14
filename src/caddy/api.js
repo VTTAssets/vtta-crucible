@@ -42,10 +42,7 @@ const api = {
     const request = {
       method: "GET",
     };
-    console.log("API GET: " + `http://localhost:2019/${endpoint}`);
-    console.log(request);
     const response = await fetch(`http://localhost:2019/${endpoint}`, request);
-    console.log(response);
     if (response.ok) {
       switch (format) {
         case "text":

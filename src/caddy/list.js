@@ -11,36 +11,28 @@ const API_PORT = 2019;
  */
 const getUpstreams = async () => {
   const upstreams = await api.get("/reverse_proxy/upstreams");
-  console.log("getUpStreams(): ");
-  console.log(upstreams);
-  console.log("--");
   return upstreams;
 };
 
 const parseConfig = (config) => {
-  console.log("Parsing Caddy config");
-  console.log(config);
   let port = null;
   try {
     port = parseInt(config.listen[0].substring(1));
   } catch (error) {
     port = null;
   }
-  console.log("Port: " + port);
   let upstream = null;
   try {
     const reverseProxy = config.routes[0].handle[0].routes[0].handle.find(
       (entry) => entry.handler === "reverse_proxy"
     );
-    console.log("Reverse Proxy");
-    console.log(reverseProxy);
+
     if (reverseProxy) {
       upstream = reverseProxy.upstreams[0].dial;
     }
   } catch (error) {
     upstream = null;
   }
-  console.log(upstream);
 
   return { upstream, port };
 };
@@ -67,16 +59,11 @@ const list = async () => {
         "json"
       );
 
-      console.log("Config from api");
-      console.log(config);
-
       // if config was not received
       if (!config) return server;
 
       const configuredProxy = parseConfig(config);
 
-      console.log("Done parsing config");
-      console.log(configuredProxy);
       if (configuredProxy.upstream) {
         // [
         //   {
@@ -89,15 +76,10 @@ const list = async () => {
         const upstreamStatus = upstreamStatuses.find(
           (entry) => entry.address === configuredProxy.upstream
         );
-        console.log("Found upstreamStatus:");
-        console.log(upstreamStatus);
         result.upstream = configuredProxy.upstream;
         result.healthy = upstreamStatus.healthy;
         result.configured = result.upstream && result.healthy !== undefined;
       }
-
-      console.log("Result for " + server.hostname);
-      console.log(result);
 
       return result;
     })
