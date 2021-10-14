@@ -1,5 +1,5 @@
 const create = (hostname, port, pm2Id) => {
-  const logId = "accessLog" + pmsId;
+  const logId = "accessLog" + pm2Id;
 
   const baseConfig = {
     apps: {
