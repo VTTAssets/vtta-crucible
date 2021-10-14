@@ -1,4 +1,5 @@
 import fetch from "node-fetch";
+import ui from "../lib/ui.js";
 
 const api = {
   post: async (endpoint, data) => {
@@ -9,9 +10,20 @@ const api = {
       },
       body: JSON.stringify(data),
     };
-    const response = await fetch(`http://localhost:2019/${endpoint}`, request);
-    if (response.ok) {
-      return true;
+
+    try {
+      const response = await fetch(
+        `http://localhost:2019/${endpoint}`,
+        request
+      );
+
+      if (response.ok) {
+        return true;
+      }
+    } catch (error) {
+      ui.log("Could not create Caddy reverse proxy configuration", "error");
+      console.log(error);
+      return false;
     }
   },
   get: async (endpoint, format = "json") => {

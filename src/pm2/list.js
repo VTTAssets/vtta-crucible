@@ -36,7 +36,10 @@ const list = () => {
               return {
                 hostname: server.hostname,
                 id: parseInt(config.pm2_env.pm_id),
-                status: config.pm2_env.status,
+                status:
+                  config.pm2_env.status === "online"
+                    ? "running"
+                    : config.pm2_env.status,
                 resources: config.monit
                   ? {
                       memory: Math.ceil(config.monit.memory / 1024 / 1024),
