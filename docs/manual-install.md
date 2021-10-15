@@ -123,7 +123,7 @@ exit
 With the directory in place, we copy the saved public key from root's home directory to crucible's home directory and we will transfer ownership (`chown` = change owner) to the crucible user
 
 ```
-cp ~/.ssh/authorized_keys /home/crucible/.ssh && chown crucible:crubible /home/crucible/.ssh/authorized_keys
+cp ~/.ssh/authorized_keys /home/crucible/.ssh && chown crucible:crucible /home/crucible/.ssh/authorized_keys
 ```
 
 You can now test to authenticate with the `crucible` user using SSH and your private key. If it works fine, you should configure the ssh server to prohibit logging in with the root user directly. In the future, we will login with the user `crucible` and use `sudo` (**s**uper **u**ser **do**) if we need to do something requiring administrational access.
