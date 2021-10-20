@@ -1,41 +1,50 @@
 #!/bin/bash
 
 # Add additional sources to install node.js and caddy
-echo -ne "Running pre-Install routine for node.js...";
-curl -fsSL https://deb.nodesource.com/setup_lts.x | bash - > /dev/null 2>&1
+echo "--- PRE-INSTALL: NODE.JS ----------------------------------------------"
+curl -fsSL https://deb.nodesource.com/setup_lts.x | bash -
 echo "Done."
+echo "-----------------------------------------------------------------------"
 
-echo -ne "Running pre-install for Caddy (reverse proxy)..."
+echo "--- PRE-INSTALL: Caddy ------------------------------------------------"
 curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/gpg.key' | tee /etc/apt/trusted.gpg.d/caddy-stable.asc > /dev/null 2>&1
 curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/debian.deb.txt' | tee /etc/apt/sources.list.d/caddy-stable.list > /dev/null 2>&1
 echo "Done."
+echo "-----------------------------------------------------------------------"
 
 # Update the package list
-echo -ne "Updating package list (this takes a moment, please stand by)..."
-apt update > /dev/null 2>&1 && apt upgrade -y > /dev/null 2>&1
+echo "--- INSTALLING: SYSTEM UPDATES ----------------------------------------"
+echo -ne "Updating package list..."
+apt update > /dev/null 2>&1
 echo "Done."
-
+echo "Installing system updates, this will take a couple of minutes. Please stand by..."
+apt upgrade -y 
+echo "Done."
+echo "-----------------------------------------------------------------------"
 # Install pre-requisites
-echo -ne "Installing software pre-requisites...";
-apt-get install -y debian-keyring debian-archive-keyring apt-transport-https > /dev/null 2>&1
+echo "--- INSTALLING: SOFTWARE REQUIREMENTS ---------------------------------"
+apt-get install -y debian-keyring debian-archive-keyring apt-transport-https yarn git
 echo "Done."
+echo "-----------------------------------------------------------------------"
 
 # Install nodejs.
-echo -ne "Installing node.js..."
-apt-get install -y nodejs yarn git > /dev/null 2>&1
+echo "--- INSTALLING: NODE.JS -----------------------------------------------"
+apt-get install -y nodejs 
 echo "Done."
+echo "-----------------------------------------------------------------------"
 
 # Installing Caddy, an easy to use reverse proxy.
 # We are employing Caddy to 
 # a) manage our SSL certificates for us
 # b) route traffic from our players to our installed Foundry VTT servers
-echo -ne "Installing Caddy (reverse proxy)..."
-apt-get install -y caddy > /dev/null 2>&1
+echo "--- INSTALLING: CADDY -------------------------------------------------"
+apt-get install -y caddy
 # Disabling regular Caddyfile configuration, instead using...
-sudo systemctl disable --now caddy > /dev/null 2>&1
+sudo systemctl disable --now caddy 
 # ... configuration via API
-sudo systemctl enable --now caddy-api > /dev/null 2>&1
+sudo systemctl enable --now caddy-api
 echo "Done."
+echo "-----------------------------------------------------------------------"
 
 # Create a subdirectory to store a Caddyfile per FVTT server
 # mkdir -p /etc/caddy/crucible
@@ -43,20 +52,20 @@ echo "Done."
 # grep -qxF 'import /etc/caddy/crucible/*' /etc/caddy/Caddyfile || echo 'import /etc/caddy/crucible/*' >>  /etc/caddy/Caddyfile
 
 # Install the process manager for node.js processes 
-echo -ne "Installing pm2 (node process manager)..."
-npm install pm2@latest -g > /dev/null 2>&1
+echo "--- INSTALLING: PM2 ---------------------------------------------------"
+npm install pm2@latest -g 
 echo "Done."
+echo "-----------------------------------------------------------------------"
 
 # Install a log rotate module to not fill up our drive with logs
-echo -ne "Installing pm2 logrotate plugin, to avoid filling up our drive with logs..."
-pm2 install pm2-logrotate > /dev/null 2>&1
+echo "--- INSTALLING: PM2 LOG ROTATION --------------------------------------"
+pm2 install pm2-logrotate 
 echo "Done."
-
-echo -ne "Registering pm2 as a service to be started automatically on boot..."
-pm2 startup > /dev/null 2>&1
+echo "--- CONFIGURING: PM2 (STARTUP) ----------------------------------------"
+pm2 startup 
 echo "Done."
+echo "-----------------------------------------------------------------------"
 
-echo "------------------------------------------"
 
 echo "Installing crucible..."
 git clone https://github.com/VTTAssets/vtta-crucible.git 2>&1 && cd vtta-crucible && npm install 2>&1
